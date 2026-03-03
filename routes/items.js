@@ -51,4 +51,24 @@ router.get('/:id', async (req, res) => {
   }
 });
 
+// PUT: Update item by ID
+router.put('/:id', async (req, res) => {
+  try {
+    const updatedItem = await Item.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true, runValidators: true }
+    );
+
+    if (!updatedItem) {
+      return res.status(404).json({ message: 'Item not found' });
+    }
+
+    res.json(updatedItem);
+  } catch (err) {
+    console.error(err);
+    res.status(400).json({ message: 'Invalid ID format or update error' });
+  }
+});
+
 module.exports = router;
