@@ -1,11 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const Item = require('../models/item'); // make sure path is correct
+const Item = require('../models/item');
+const auth = require('../middleware/authMiddleware');
 
-// POST: create new item
-router.post('/', async (req, res) => {
+// ========================
+// POST: Create new item
+// ========================
+router.post('/', auth, async (req, res) => {
   try {
-    const { title, description, type, itemCategory, location, date, contactInfo, createdBy } = req.body;
+    const { title, description, type, itemCategory, location, date, contactInfo } = req.body;
+
     const newItem = new Item({
       title,
       description,
@@ -14,8 +18,9 @@ router.post('/', async (req, res) => {
       location,
       date,
       contactInfo,
-      createdBy
+      createdBy: req.user // <-- MUST come from JWT
     });
+
     const savedItem = await newItem.save();
     res.status(201).json(savedItem);
   } catch (err) {
@@ -24,7 +29,9 @@ router.post('/', async (req, res) => {
   }
 });
 
-// GET: get all items
+// ========================
+// GET: All items (public)
+// ========================
 router.get('/', async (req, res) => {
   try {
     const items = await Item.find().sort({ createdAt: -1 });
@@ -35,15 +42,13 @@ router.get('/', async (req, res) => {
   }
 });
 
-// GET: Get single item by ID
+// ========================
+// GET: Single item by ID (public)
+// ========================
 router.get('/:id', async (req, res) => {
   try {
     const item = await Item.findById(req.params.id);
-
-    if (!item) {
-      return res.status(404).json({ message: 'Item not found' });
-    }
-
+    if (!item) return res.status(404).json({ message: 'Item not found' });
     res.json(item);
   } catch (err) {
     console.error(err);
@@ -51,18 +56,24 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// PUT: Update item by ID
-router.put('/:id', async (req, res) => {
+// ========================
+// PUT: Update item (owner only)
+// ========================
+router.put('/:id', auth, async (req, res) => {
   try {
+    const item = await Item.findById(req.params.id);
+    if (!item) return res.status(404).json({ message: 'Item not found' });
+
+    // Only owner can update
+    if (item.createdBy.toString() !== req.user) {
+      return res.status(403).json({ message: 'Unauthorized' });
+    }
+
     const updatedItem = await Item.findByIdAndUpdate(
       req.params.id,
       req.body,
       { new: true, runValidators: true }
     );
-
-    if (!updatedItem) {
-      return res.status(404).json({ message: 'Item not found' });
-    }
 
     res.json(updatedItem);
   } catch (err) {
@@ -71,15 +82,20 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-// DELETE: Delete item by ID
-router.delete('/:id', async (req, res) => {
+// ========================
+// DELETE: Remove item (owner only)
+// ========================
+router.delete('/:id', auth, async (req, res) => {
   try {
-    const deletedItem = await Item.findByIdAndDelete(req.params.id);
+    const item = await Item.findById(req.params.id);
+    if (!item) return res.status(404).json({ message: 'Item not found' });
 
-    if (!deletedItem) {
-      return res.status(404).json({ message: 'Item not found' });
+    // Only owner can delete
+    if (item.createdBy.toString() !== req.user) {
+      return res.status(403).json({ message: 'Unauthorized' });
     }
 
+    await Item.findByIdAndDelete(req.params.id);
     res.json({ message: 'Item deleted successfully' });
   } catch (err) {
     console.error(err);

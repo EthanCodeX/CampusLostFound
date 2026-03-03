@@ -17,10 +17,9 @@ const itemSchema = new mongoose.Schema({
     required: true
   },
   itemCategory: {
-    type: String,
-    enum: ['Electronics', 'Wallet', 'Document', 'Clothing', 'Other'],
-    required: true
-  },
+  type: String,
+  required: true
+},
   location: {
     type: String,
     required: true
