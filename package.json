@@ -1,5 +1,5 @@
 {
-  "name": "fa_wt",
+  "name": "campuslostfound",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -20,5 +20,13 @@
   },
   "devDependencies": {
     "nodemon": "^3.1.14"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EthanCodeX/CampusLostFound.git"
+  },
+  "bugs": {
+    "url": "https://github.com/EthanCodeX/CampusLostFound/issues"
+  },
+  "homepage": "https://github.com/EthanCodeX/CampusLostFound#readme"
 }
