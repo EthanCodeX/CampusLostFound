@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Lost & Found System | Home</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body class="bg-light">
+
+<nav class="navbar navbar-dark bg-primary p-3">
+  <h4 class="text-white m-auto">QIU Lost & Found System</h4>
+</nav>
+
+<div class="container text-center" style="margin-top: 100px;">
+  <img src="assets/logo.png" alt="logo" width="360">
+
+  <h2 class="mt-4">Welcome to Lost & Found Portal</h2>
+  <p class="text-muted">Helping students find their lost items with ease</p>
+
+  <div class="mt-4">
+    <a href="login.html" class="btn btn-primary btn-lg m-2">Login</a>
+    <a href="register.html" class="btn btn-outline-primary btn-lg m-2">Register</a>
+  </div>
+</div>
+
+<script>
+// Redirect to dashboard if already logged in
+if (localStorage.getItem('token')) {
+  window.location.href = "dashboard.html";
+}
+</script>
+
+</body>
+</html>

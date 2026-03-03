@@ -4,44 +4,63 @@ const itemSchema = new mongoose.Schema({
   title: {
     type: String,
     required: true,
-    trim: true
+    trim: true,
   },
   description: {
     type: String,
     required: true,
-    trim: true
+    trim: true,
   },
   type: {
     type: String,
-    enum: ['lost', 'found'],
-    required: true
+    enum: ['LOST', 'FOUND', 'CLOSED'], // enum stays, only accepts these
+    required: true,
+    trim: true,
   },
   itemCategory: {
-  type: String,
-  required: true
-},
+    type: String,
+    required: true,
+    trim: true,
+  },
   location: {
     type: String,
-    required: true
+    required: true,
+    trim: true,
   },
   date: {
     type: Date,
-    required: true
+    required: true,
   },
   contactInfo: {
     type: String,
-    required: true
+    required: true,
+    trim: true,
+  },
+  image: {
+    type: String,
+    trim: true,
   },
   status: {
     type: String,
-    enum: ['active', 'claimed', 'resolved'],
-    default: 'active'
+    default: "ACTIVE",
   },
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: true
+    ref: "User",
+    required: true,
   }
 }, { timestamps: true });
+
+// ========================
+// Pre-save middleware: auto-uppercase all string fields
+// ========================
+itemSchema.pre('save', function() {
+  // 'this' is the document
+  for (let key in this._doc) {
+    if (typeof this[key] === 'string') {
+      this[key] = this[key].toUpperCase();
+    }
+  }
+});
 
 module.exports = mongoose.model('Item', itemSchema);

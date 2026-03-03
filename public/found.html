@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Report Found Item | Lost & Found</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="bg-light">
+
+<nav class="navbar navbar-dark bg-success p-3">
+  <h4 class="text-white m-0">Report Found Item</h4>
+  <div>
+    <button class="btn btn-light btn-sm me-2" onclick="goBack()">Back</button>
+    <button class="btn btn-light btn-sm" onclick="logout()">Logout</button>
+  </div>
+</nav>
+
+<div class="container mt-4">
+
+  <!-- REPORT FORM -->
+  <div class="card p-4 shadow mb-5">
+    <h5 class="mb-3">Found Item Details</h5>
+
+    <form id="foundForm" enctype="multipart/form-data">
+
+      <div class="mb-3">
+        <label class="form-label">Item Name *</label>
+        <input type="text" id="found-title" class="form-control" required>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Description</label>
+        <textarea id="found-description" class="form-control"></textarea>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Category *</label>
+        <select id="found-category" class="form-select" required>
+          <option value="">-- SELECT CATEGORY --</option>
+          <option>WALLET</option>
+          <option>PHONE</option>
+          <option>LAPTOP</option>
+          <option>TABLET</option>
+          <option>KEYS</option>
+          <option>ID CARD</option>
+          <option>STUDENT CARD</option>
+          <option>BAG</option>
+          <option>CLOTHES</option>
+          <option>ACCESSORIES</option>
+          <option>BOOK</option>
+          <option>OTHER</option>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Location *</label>
+        <input type="text" id="found-location" class="form-control" required>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Date *</label>
+        <input type="date" id="found-date" class="form-control" required>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Contact Info *</label>
+        <input type="text" id="found-contact" class="form-control" required>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Upload Picture</label>
+        <input type="file" id="found-image" class="form-control" accept="image/*">
+      </div>
+
+      <button type="submit" class="btn btn-success w-100">Submit Found Report</button>
+      <p id="found-msg" class="mt-2 text-danger"></p>
+
+    </form>
+  </div>
+
+  <!-- LOST ITEMS DISPLAY -->
+  <div class="row">
+    <!-- FILTER COLUMN -->
+    <div class="col-md-3 mb-3">
+      <div class="card p-3 shadow">
+        <h6>Filter Lost Items</h6>
+
+        <label>Sort By:</label>
+        <select id="sort-option" class="form-select mb-2">
+          <option value="recent">Most Recent</option>
+          <option value="oldest">Oldest</option>
+        </select>
+
+        <label>Category:</label>
+        <select id="filter-category" class="form-select mb-2">
+          <option value="">ALL CATEGORIES</option>
+          <option>WALLET</option>
+          <option>PHONE</option>
+          <option>LAPTOP</option>
+          <option>TABLET</option>
+          <option>KEYS</option>
+          <option>ID CARD</option>
+          <option>STUDENT CARD</option>
+          <option>BAG</option>
+          <option>CLOTHES</option>
+          <option>ACCESSORIES</option>
+          <option>BOOK</option>
+          <option>OTHER</option>
+        </select>
+
+        <button type="button" class="btn btn-primary w-100" onclick="applyLostFilter()">Search</button>
+      </div>
+    </div>
+
+    <!-- LOST ITEMS LIST -->
+    <div class="col-md-9">
+      <div id="lost-list" class="row row-cols-1 row-cols-md-2 g-3"></div>
+    </div>
+  </div>
+
+</div>
+
+<script src="js/common.js"></script>
+<script src="js/found.js"></script>
+<script src="js/lost-display.js"></script>
+</body>
+</html>
