@@ -1,13 +1,26 @@
+require('dotenv').config();
 const express = require('express');
+const mongoose = require('mongoose');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(express.static('public'));
+// Connect to MongoDB (no options needed in Mongoose >=7)
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => console.log('MongoDB Connected'))
+  .catch(err => console.error('MongoDB connection error:', err));
 
-// Test route
+// Middleware
+app.use(express.json()); // parse JSON bodies
+app.use(express.urlencoded({ extended: true })); // parse URL-encoded bodies
+app.use(express.static('public')); // serve static files from public/
+
+// Import item routes
+const itemRoutes = require('./routes/items');
+
+// Use item routes
+app.use('/items', itemRoutes);
+
+// Test root route
 app.get('/', (req, res) => {
   res.send('Campus Lost & Found Server Running');
 });
