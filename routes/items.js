@@ -35,4 +35,20 @@ router.get('/', async (req, res) => {
   }
 });
 
+// GET: Get single item by ID
+router.get('/:id', async (req, res) => {
+  try {
+    const item = await Item.findById(req.params.id);
+
+    if (!item) {
+      return res.status(404).json({ message: 'Item not found' });
+    }
+
+    res.json(item);
+  } catch (err) {
+    console.error(err);
+    res.status(400).json({ message: 'Invalid ID format' });
+  }
+});
+
 module.exports = router;
