@@ -71,4 +71,20 @@ router.put('/:id', async (req, res) => {
   }
 });
 
+// DELETE: Delete item by ID
+router.delete('/:id', async (req, res) => {
+  try {
+    const deletedItem = await Item.findByIdAndDelete(req.params.id);
+
+    if (!deletedItem) {
+      return res.status(404).json({ message: 'Item not found' });
+    }
+
+    res.json({ message: 'Item deleted successfully' });
+  } catch (err) {
+    console.error(err);
+    res.status(400).json({ message: 'Invalid ID format' });
+  }
+});
+
 module.exports = router;
