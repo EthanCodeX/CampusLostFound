@@ -3,6 +3,7 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
+const nodemailer = require('nodemailer');
 
 // -------------------- REGISTER --------------------
 router.post('/register', async (req, res) => {
@@ -31,7 +32,7 @@ router.post('/register', async (req, res) => {
   }
 });
 
-// LOGIN
+// -------------------- LOGIN --------------------
 router.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -42,12 +43,11 @@ router.post('/login', async (req, res) => {
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(400).json({ message: 'Invalid credentials' });
 
-    // create token
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
 
     res.json({
       token,
-      userId: user._id,   // <- new
+      userId: user._id,
       name: user.name,
       role: user.role || "student"
     });

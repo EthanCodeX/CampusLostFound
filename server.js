@@ -22,6 +22,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Serve uploaded images
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
+app.get('/favicon.ico', (req, res) => res.status(204).end());
+
 // -------------------- API ROUTES --------------------
 const itemRoutes = require('./routes/items');
 const authRoutes = require('./routes/auth');

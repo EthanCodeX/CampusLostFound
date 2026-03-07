@@ -1,49 +1,110 @@
+let displayedItems = []; // all items after fetch/filter
+let itemsPerPage = 6;    // number of cards per batch
+let currentIndex = 0;    // track how many items are displayed
+
 const lostList = document.getElementById("lost-list");
 
+// =======================
+// LOAD LOST ITEMS
+// =======================
 async function loadLostItems() {
   try {
     const res = await fetch(`${BASE_URL}/items`);
     const items = await res.json();
-    displayLostItems(items.filter(i => i.type === "LOST"));
+    const lostItems = items.filter(i => i.type === "LOST");
+    displayedItems = lostItems;
+    currentIndex = 0; // reset
+    displayLostItemsBatch();
   } catch (err) {
     console.error("Failed to load lost items", err);
     lostList.innerHTML = `<p class="text-center text-danger">Failed to load items.</p>`;
   }
 }
 
-function displayLostItems(items) {
-  lostList.innerHTML = "";
+// =======================
+// DISPLAY ITEMS IN BATCHES
+// =======================
+function displayLostItemsBatch() {
+  const batch = displayedItems.slice(currentIndex, currentIndex + itemsPerPage);
 
-  if (items.length === 0) {
-    lostList.innerHTML = `<p class="text-center text-muted">No lost items yet.</p>`;
-    return;
-  }
-
-  items.forEach(item => {
+  // Append batch
+  batch.forEach((item, index) => {
     const col = document.createElement("div");
     col.className = "col";
 
-    // Color badge for status
     let statusClass = item.type === "LOST" ? "bg-danger" : "bg-success";
 
     col.innerHTML = `
-      <div class="card p-3 shadow h-100">
-        ${item.image ? `<img src="${BASE_URL}/${item.image}" style="width:100%; height:200px; object-fit:cover; border-radius:4px;" class="mt-2 mb-2">` : ""}
-        <h6>${item.title}</h6>
+      <div class="card p-3 shadow h-100 lost-item-card" data-index="${currentIndex + index}">
+        ${item.image ? `<img src="${BASE_URL}/${item.image}" loading="lazy" style="width:100%; height:200px; object-fit:cover; border-radius:4px;" class="mt-2 mb-2">` : ""}
+        <h6>
+          ${item.title} 
+          <span class="badge ${statusClass} text-white">${item.type}</span>
+        </h6>
         <p>${item.description}</p>
         <p><strong>Category:</strong> ${item.itemCategory}</p>
         <p><strong>Location:</strong> ${item.location}</p>
         <p><strong>Date:</strong> ${new Date(item.date).toLocaleDateString()}</p>
         <p><strong>Contact:</strong> ${item.contactInfo}</p>
-        <span class="badge ${statusClass} text-white mb-2">${item.type}</span>
       </div>
     `;
 
     lostList.appendChild(col);
   });
+
+  currentIndex += batch.length;
+
+  // Remove existing "View More" button if any
+  const existingBtn = document.getElementById("view-more-btn");
+  if (existingBtn) existingBtn.remove();
+
+  // Add "View More" if more items left
+  if (currentIndex < displayedItems.length) {
+    const viewMoreBtn = document.createElement("button");
+    viewMoreBtn.id = "view-more-btn";
+    viewMoreBtn.className = "btn btn-primary w-100 mt-3";
+    viewMoreBtn.innerText = "View More";
+    viewMoreBtn.addEventListener("click", displayLostItemsBatch);
+    lostList.parentElement.appendChild(viewMoreBtn);
+  }
+
+  attachItemDetailListeners(); // attach modal click events
 }
 
-// Filter function
+// =======================
+// ITEM DETAIL MODAL
+// =======================
+function attachItemDetailListeners() {
+  const cards = document.querySelectorAll(".lost-item-card");
+  cards.forEach(card => {
+    card.addEventListener("click", () => {
+      const index = card.getAttribute("data-index");
+      const item = displayedItems[index];
+
+      if (!item) return;
+
+      // Populate modal
+      document.getElementById("detail-title").innerHTML = `${item.title} <span class="badge ${item.type === 'LOST' ? 'bg-danger' : 'bg-success'} text-white">${item.type}</span>`;
+
+      document.getElementById("detail-body").innerHTML = `
+        ${item.image ? `<img src="${BASE_URL}/${item.image}" loading="lazy" style="width:100%; height:auto; object-fit:cover; border-radius:4px;" class="mb-3">` : ""}
+        <p><strong>Description:</strong> ${item.description}</p>
+        <p><strong>Category:</strong> ${item.itemCategory}</p>
+        <p><strong>Location:</strong> ${item.location}</p>
+        <p><strong>Date:</strong> ${new Date(item.date).toLocaleDateString()}</p>
+        <p><strong>Contact:</strong> ${item.contactInfo}</p>
+        <p><strong>Reported By:</strong> ${item.createdByName || 'Anonymous'}</p>
+      `;
+
+      const modal = new bootstrap.Modal(document.getElementById('itemDetailModal'));
+      modal.show();
+    });
+  });
+}
+
+// =======================
+// FILTER FUNCTION
+// =======================
 function applyLostFilter() {
   const sortOption = document.getElementById("sort-option").value;
   const categoryFilter = document.getElementById("filter-category").value.toUpperCase();
@@ -59,7 +120,10 @@ function applyLostFilter() {
         return new Date(a.date) - new Date(b.date);
       });
 
-      displayLostItems(filtered);
+      displayedItems = filtered;
+      currentIndex = 0;
+      lostList.innerHTML = ""; // clear previous
+      displayLostItemsBatch();
     })
     .catch(err => {
       console.error("Filter failed", err);
@@ -67,5 +131,7 @@ function applyLostFilter() {
     });
 }
 
-// Load lost items on page load
+// =======================
+// LOAD ON PAGE READY
+// =======================
 document.addEventListener("DOMContentLoaded", loadLostItems);

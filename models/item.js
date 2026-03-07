@@ -13,7 +13,7 @@ const itemSchema = new mongoose.Schema({
   },
   type: {
     type: String,
-    enum: ['LOST', 'FOUND', 'CLOSED'], // enum stays, only accepts these
+    enum: ['LOST', 'FOUND', 'CLOSED'], 
     required: true,
     trim: true,
   },

@@ -1,17 +1,5 @@
 const token = localStorage.getItem("token");
 
-// ========================
-// LOG CURRENT USER ID
-// ========================
-if (token) {
-  try {
-    const payload = JSON.parse(atob(token.split('.')[1]));
-    console.log("Current User ID from token:", payload.id);
-  } catch (err) {
-    console.error("Failed to decode token", err);
-  }
-}
-
 // redirect if not logged in
 if (!token) {
   alert("Please log in to view your reports.");
@@ -96,9 +84,9 @@ function createRow(item, type) {
       <td>
         <div class="d-flex flex-wrap gap-1">
           ${!isClosed
-            ? `<button class="btn btn-sm btn-success" onclick="markAsClosed('${item._id}')">Mark as Closed</button>`
+            ? `<button class="btn btn-sm btn-success flex-fill" onclick="markAsClosed('${item._id}')">Completed</button>`
             : ""}
-          <button class="btn btn-sm btn-danger" onclick="deleteItem('${item._id}')">Delete</button>
+          <button class="btn btn-sm btn-danger flex-fill" onclick="deleteItem('${item._id}')">Delete</button>
         </div>
       </td>
     </tr>
