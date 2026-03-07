@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:3000";
+const BASE_URL = window.location.origin; // dynamically uses current host
 
 // -------------------- LOGIN --------------------
 async function login() {

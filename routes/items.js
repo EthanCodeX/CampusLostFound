@@ -50,15 +50,6 @@ router.post('/', auth, upload.single("image"), async (req, res) => {
 // ========================
 // GET: All items (public)
 // ========================
-// router.get('/', async (req, res) => {
-//   try {
-//     const items = await Item.find().sort({ createdAt: -1 });
-//     res.json(items);
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).json({ message: 'Server Error' });
-//   }
-// });
 router.get('/', async (req, res) => {
   try {
     // populate createdBy name from User model

@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:3000"; // match your backend port
+const BASE_URL = window.location.origin; // dynamically uses current host
 
 // Redirect to login if token missing
 if (!localStorage.getItem("token")) {
