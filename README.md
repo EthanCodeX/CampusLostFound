@@ -11,60 +11,159 @@ Access the deployed application here:
 
 ---
 
-## 📌 Features
+📌 Features
+Functional
 
-### Functional
-- Submit a **Lost Item** report
-- Submit a **Found Item** report
-- View all **Lost** and **Found** items
-- **Filter** and **Sort** items by category or date
-- View **Item Details** in a modal popup
-- Update item status: Active → Claimed / Resolved
-- Delete a report
+Submit a Lost Item report
 
-### Item Details
-Each item includes:  
-- Title  
-- Description  
-- Category (Lost/Found)  
-- Location  
-- Date  
-- Contact Information  
-- Status  
+Submit a Found Item report
 
----
+View all Lost and Found items
 
-## 🛠️ Technical Stack
+Filter and Sort items by category or date
 
-### Frontend
-- HTML5 with semantic structure
-- CSS3 and responsive design (mobile-friendly)
-- Bootstrap 5 for UI components
-- JavaScript for dynamic content and validation
-- Lazy loading for images
-- Deferred scripts for better performance
+View Item Details in a modal popup
 
-### Backend
-- Node.js with Express framework
-- MongoDB for database (Mongoose ODM)
-- JWT-based authentication
-- RESTful API routes (`GET`, `POST`, `PUT`, `DELETE`)
-- Middleware for JSON parsing, file uploads, and static file serving
-- Error handling: 404 & server errors
+Update item status: Active → Claimed / Resolved
 
-### Security
-- Server-side input validation & sanitization
-- SQL Injection / NoSQL injection prevention
-- Basic XSS protection
-- `.env` for sensitive credentials
-- Passwords hashed with **bcrypt**
+Delete a report
 
-### Performance
-- Image optimization
-- Lazy loading & deferred scripts
-- Minified CSS & JS
-- Efficient database queries
+Responsive design for desktop and mobile devices
 
----
+Item Details
 
-## 🗂️ Project Structure
+Each item includes:
+
+Title
+
+Description
+
+Category (Lost/Found)
+
+Location
+
+Date
+
+Contact Information
+
+Status
+
+🛠️ Technical Stack
+Frontend
+
+HTML5 with semantic structure
+
+CSS3 with responsive design
+
+Bootstrap 5 for UI components
+
+JavaScript for dynamic content and validation
+
+Lazy loading for images
+
+Deferred scripts for better performance
+
+Backend
+
+Node.js with Express framework
+
+MongoDB with Mongoose ODM
+
+JWT-based authentication
+
+RESTful API routes (GET, POST, PUT, DELETE)
+
+Middleware for JSON parsing, file uploads, and static file serving
+
+Error handling for 404 and server errors
+
+Security
+
+Server-side input validation & sanitization
+
+NoSQL injection prevention
+
+Basic XSS protection
+
+.env for sensitive credentials
+
+Passwords hashed with bcrypt
+
+Performance
+
+Image optimization
+
+Lazy loading & deferred scripts
+
+Minified CSS & JS
+
+Efficient database queries
+
+🗂️ Project Structure
+Campus-Lost-Found/
+├─ assets/                  # Images, logos, icons
+├─ css/
+│  └─ style.css             # Custom styles
+├─ js/
+│  ├─ auth.js               # Login/Register functionality
+│  ├─ common.js             # Shared functions
+│  ├─ lost.js               # Lost item form & logic
+│  ├─ found.js              # Found item form & logic
+│  ├─ lost-display.js       # Lost items UI display
+│  ├─ found-display.js      # Found items UI display
+│  └─ item-detail.js        # Modal item detail logic
+├─ views/
+│  ├─ index.html            # Landing page
+│  ├─ login.html
+│  ├─ register.html
+│  ├─ dashboard.html
+│  ├─ lost.html
+│  ├─ found.html
+│  └─ history.html
+├─ models/
+│  ├─ Item.js               # Item schema (Lost/Found)
+│  └─ User.js               # User schema
+├─ routes/
+│  ├─ auth.js               # Authentication routes
+│  ├─ items.js              # Item-related routes
+│  └─ users.js              # User-related routes
+├─ .env                     # Environment variables
+├─ package.json
+├─ package-lock.json
+└─ README.md
+⚡ Setup Instructions
+
+Clone the repository:
+
+git clone <repository-url>
+cd Campus-Lost-Found
+
+Install dependencies:
+
+npm install
+
+Create a .env file with the following variables:
+
+PORT=3000
+MONGO_URI=<your_mongo_db_connection_string>
+JWT_SECRET=<your_jwt_secret>
+
+Start the server:
+
+npm start
+
+Access the application at http://localhost:3000
+
+🤝 Contribution
+
+Contributions are welcome! You can:
+
+Fork the repository
+
+Create a feature branch
+
+Submit pull requests for review
+
+📝 License
+
+This project is licensed under the MIT License.
