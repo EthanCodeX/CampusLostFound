@@ -2,42 +2,178 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login | Lost & Found System</title>
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    body{
+      background: linear-gradient(135deg,#f2efff,#faf9ff);
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
+    }
+
+    .login-wrapper{
+      width:100%;
+      max-width:1000px;
+      background:white;
+      border-radius:16px;
+      overflow:hidden;
+      box-shadow:0 10px 30px rgba(0,0,0,0.07);
+      display:flex;
+    }
+
+    .login-left{
+      background:#755983;
+      color:#5a4fcf;
+      padding:50px 40px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+      width:45%;
+      text-align:center;
+    }
+
+    .login-left img{
+      width:170px;
+      margin-bottom:20px;
+      filter:drop-shadow(0 4px 8px rgba(0,0,0,0.15));
+    }
+
+    .login-left h3{
+      font-weight:600;
+      margin-bottom:10px;
+      color:white;
+    }
+
+    .login-left p{
+      color:white;
+      font-size:20px;
+    }
+
+    .login-right{
+      padding:50px 40px;
+      width:55%;
+      background:#ffffff;
+    }
+
+    .login-card-title{
+      font-weight:600;
+      margin-bottom:5px;
+      color:#5a4fcf;
+    }
+
+    .btn-primary{
+      background:#7c73e6;
+      border:none;
+    }
+
+    .btn-primary:hover{
+      background:#6a61d6;
+    }
+
+    .form-control{
+      border-radius:8px;
+      border:1px solid #e4e1ff;
+    }
+
+    .form-control:focus{
+      border-color:#bdb8ff;
+      box-shadow:0 0 0 0.15rem rgba(124,115,230,0.15);
+    }
+
+    .input-group button{
+      border-radius:0 8px 8px 0;
+    }
+
+    @media (max-width:768px){
+
+      .login-wrapper{
+        flex-direction:column;
+        margin:20px;
+      }
+
+      .login-left{
+        width:100%;
+        padding:35px 20px;
+      }
+
+      .login-left img{
+        width:120px;
+      }
+
+      .login-right{
+        width:100%;
+        padding:30px 22px;
+      }
+
+      .form-control{
+        height:45px;
+      }
+
+      .btn{
+        height:45px;
+      }
+
+    }
+  </style>
+
 </head>
 
-<body class="bg-light">
+<body>
 
-<div class="container d-flex justify-content-center align-items-center" style="height:100vh;">
-  <div class="card shadow p-4" style="width: 380px; border-radius: 12px;">
-    <h3 class="text-center mb-3"><i class="fa-solid fa-circle-user"></i>  Login</h3>
-    <p class="text-muted text-center">Access your account</p>
+<div class="login-wrapper">
+
+  <div class="login-left">
+    <img src="assets/logo.png" alt="logo">
+    <h3>QIU Lost & Found</h3>
+    <p>Helping students recover their lost items quickly and easily.</p>
+  </div>
+
+  <div class="login-right">
+
+    <h3 class="login-card-title">
+      <i class="fa-solid fa-circle-user"></i> Login
+    </h3>
+
+    <p class="text-muted mb-4">Access your account</p>
 
     <input type="email" id="email" class="form-control mb-3" placeholder="Email">
 
-    <div class="input-group mb-1">
+    <div class="input-group mb-2">
       <input type="password" id="password" class="form-control" placeholder="Password">
-      <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('password')">Show</button>
+      <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('password')">
+        <i class="fa-solid fa-eye"></i>
+      </button>
     </div>
 
-    <button class="btn btn-primary w-100 mb-3 mt-3" onclick="login()">Login</button>
+    <button class="btn btn-primary w-100 mt-3 mb-3" onclick="login()">Login</button>
 
-    <p class="text-center text-muted">Don’t have an account? <a href="register.html">Register</a></p>
+    <p class="text-center text-muted small">
+      Don’t have an account? <a href="register.html">Register</a>
+    </p>
+
     <p id="msg" class="text-danger text-center mt-2"></p>
+
   </div>
+
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="js/auth.js"></script>
-<script>
-function togglePassword(inputId) {
-  const pass = document.getElementById(inputId);
-  pass.type = pass.type === "password" ? "text" : "password";
-}
 
+<script>
+function togglePassword(inputId){
+  const pass=document.getElementById(inputId);
+  pass.type=pass.type==="password"?"text":"password";
+}
 </script>
 
 </body>

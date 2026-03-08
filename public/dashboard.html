@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard | Lost & Found System</title>
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -9,16 +10,36 @@
   <link rel="stylesheet" href="css/style.css">
 
   <style>
+    body{
+      background: linear-gradient(135deg, #e8efff, #f2f7ff);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
+    }
+
+    nav{
+      background:#004aad;
+    }
+
     .option-card {
       padding: 25px;
       border-radius: 15px;
       cursor: pointer;
-      transition: 0.2s;
+      transition: 0.25s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 120px;
+      font-weight:500;
     }
+
     .option-card:hover {
-      transform: scale(1.03);
-      box-shadow: 0px 4px 15px rgba(0,0,0,0.1);
+      transform: scale(1.04);
+      box-shadow: 0px 6px 18px rgba(0,0,0,0.12);
     }
+
     .profile-badge {
       width: 40px;
       height: 40px;
@@ -26,50 +47,122 @@
       justify-content: center;
       align-items: center;
       font-size: 1.2rem;
+      font-weight:600;
+    }
+
+    .dashboard-container {
+      min-height: calc(100vh - 70px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .dashboard-card {
+      max-width: 550px;
+      width: 100%;
+      border-radius: 18px;
+      background: #f2f7ff;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+      padding: 35px;
+    }
+
+    .dashboard-card h3{
+      color:#004aad;
+    }
+
+    .option-card.bg-primary{
+      background:#004aad;
+      color:white;
+    }
+
+    .option-card.bg-success{
+      background:#6fae9e;
+      color:white;
+    }
+
+    .option-card.bg-white{
+      background:white;
+      color:#004aad;
+      border:2px solid #004aad;
+    }
+
+    @media (max-width: 768px) {
+
+      nav h4 {
+        font-size: 16px;
+      }
+
+      #profileName {
+        display: none;
+      }
+
+      .dashboard-card {
+        padding: 25px;
+      }
+
+      .option-card {
+        padding: 20px;
+        min-height: 100px;
+      }
+
+      .option-card h5 {
+        font-size: 16px;
+      }
+
+      .option-card i {
+        font-size: 22px;
+      }
+
+      .dashboard-container {
+        padding: 15px;
+      }
+
     }
   </style>
 </head>
 
-<body class="bg-light">
+<body>
 
 <!-- NAVBAR -->
-<nav class="navbar navbar-dark bg-primary p-3 d-flex justify-content-between align-items-center shadow">
+<nav class="navbar navbar-dark p-3 d-flex justify-content-between align-items-center shadow">
   <h4 class="text-white m-0"><i class="fa-solid fa-house"></i> Lost & Found Portal</h4>
 
   <div class="d-flex align-items-center">
-    <div id="profileCircle" class="rounded-circle bg-white text-primary fw-bold me-2 profile-badge"></div>
+    <div id="profileCircle" class="rounded-circle bg-white text-primary me-2 profile-badge"></div>
     <span id="profileName" class="text-white me-3"></span>
-    <button class="btn btn-light btn-sm" onclick="logout()">
-      <i class="fa-solid fa-right-from-bracket"></i> Logout
+    <button class="btn btn-light btn-sm px-4" onclick="logout()">
+      <i class="fa-solid fa-right-from-bracket me-2"></i> Logout
     </button>
   </div>
 </nav>
 
-<!-- MAIN CARD -->
-<div class="container d-flex justify-content-center align-items-center" style="height: 80vh;">
-  <div class="card shadow p-4" style="max-width: 550px; width:100%; border-radius: 15px;">
+<!-- MAIN -->
+<div class="container dashboard-container">
+  <div class="card dashboard-card">
 
     <h3 class="text-center fw-bold mb-2">
-      <i class="fa-solid fa-clipboard-check text-primary"></i> Welcome to Lost & Found Portal
+      <i class="fa-solid fa-clipboard-check text-primary"></i> Welcome
     </h3>
+
     <p class="text-center text-muted">Choose an action below</p>
 
     <div class="mt-4">
 
       <!-- LOST -->
-      <div class="option-card bg-primary text-white text-center mb-3" onclick="window.location.href='lost.html'">
+      <div class="option-card bg-primary text-center mb-3" onclick="window.location.href='lost.html'">
         <i class="fa-solid fa-magnifying-glass-location fa-2x mb-2"></i>
         <h5 class="fw-bold">Report Lost Item</h5>
       </div>
 
       <!-- FOUND -->
-      <div class="option-card bg-success text-white text-center mb-3" onclick="window.location.href='found.html'">
+      <div class="option-card bg-success text-center mb-3" onclick="window.location.href='found.html'">
         <i class="fa-solid fa-hand-holding fa-2x mb-2"></i>
         <h5 class="fw-bold">Report Found Item</h5>
       </div>
 
       <!-- HISTORY -->
-      <div class="option-card bg-white text-primary border text-center" onclick="window.location.href='history.html'">
+      <div class="option-card bg-white text-center" onclick="window.location.href='history.html'">
         <i class="fa-solid fa-file-lines fa-2x mb-2"></i>
         <h5 class="fw-bold">View My Reports</h5>
       </div>
@@ -79,7 +172,6 @@
 </div>
 
 <script>
-// Display user info
 const username = localStorage.getItem("name") || "User";
 const firstName = username.split(" ")[0];
 const initial = firstName.charAt(0).toUpperCase();
@@ -90,7 +182,6 @@ const nameTag = document.getElementById("profileName");
 if (circle) circle.textContent = initial;
 if (nameTag) nameTag.textContent = firstName;
 
-// Logout function
 function logout() {
   localStorage.removeItem("name");
   localStorage.removeItem("token");

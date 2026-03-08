@@ -2,45 +2,71 @@ body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+/* Navbar */
 nav h4 {
   font-weight: 600;
   letter-spacing: 0.5px;
 }
 
-.container img {
-  filter: drop-shadow(0 0 5px rgba(0,0,0,0.2));
+/* Home layout */
+.home-container {
+  min-height: calc(100vh - 70px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
+/* Card */
+.home-card {
+  background: white;
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  max-width: 500px;
+  width: 100%;
+}
+
+/* Logo */
+.home-logo {
+  max-width: 260px;
+  width: 100%;
+  filter: drop-shadow(0 5px 10px rgba(0,0,0,0.2));
+}
+
+/* Buttons */
 .btn-lg {
-  width: 180px;
+  height: 50px;
+  font-weight: 500;
 }
 
+/* Titles */
 .container h2 {
   font-weight: 600;
 }
-.card {
-  border: none;
-  border-radius: 12px;
-}
 
-input {
-  border-radius: 8px !important;
-}
-
-.btn {
-  border-radius: 8px;
-}
-
+/* Cards */
 .card {
   border: none;
   border-radius: 12px;
   transition: 0.3s;
 }
 
+/* Inputs */
 input, select {
   border-radius: 8px !important;
 }
 
+textarea {
+  height: 100px;
+  border-radius: 8px !important;
+}
+
+/* Buttons */
+.btn {
+  border-radius: 8px;
+}
+
+/* Option Cards */
 .option-card {
   border-radius: 12px;
   transition: 0.3s;
@@ -51,11 +77,8 @@ input, select {
   transform: scale(1.05);
   background: #f8f9fa;
 }
-textarea {
-  height: 100px;
-  border-radius: 8px !important;
-}
 
+/* Admin Images */
 .admin-img {
   height: 130px;
   width: 130px;
@@ -64,22 +87,29 @@ textarea {
   border: 1px solid #ddd;
 }
 
+/* Titles */
 h3 {
   font-weight: 600;
   color: #444;
 }
+
+/* Tables */
 table th, table td {
   vertical-align: middle;
 }
 
+/* Badge */
 .badge {
   font-size: 14px;
   padding: 6px 10px;
 }
 
+/* Modal */
 .modal-content {
   border-radius: 10px;
 }
+
+/* Profile badge */
 .profile-badge {
   width: 35px;
   height: 35px;
@@ -91,9 +121,33 @@ table th, table td {
   border: 2px solid #fff;
 }
 
+/* Lost item image */
 .lost-img {
-  width: 100%;       /* keep card width */
-  height: 200px;     /* fixed height */
-  object-fit: cover; /* crop/fit nicely without stretching */
-  border-radius: 4px; /* optional rounded corners */
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+/* Mobile Optimization */
+@media (max-width: 768px) {
+
+  .home-card {
+    padding: 30px 20px;
+    margin: 20px;
+  }
+
+  .home-logo {
+    max-width: 200px;
+  }
+
+  h2 {
+    font-size: 22px;
+  }
+
+  .btn-lg {
+    height: 48px;
+    font-size: 16px;
+  }
+
 }
