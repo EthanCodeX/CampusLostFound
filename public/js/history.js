@@ -79,7 +79,7 @@ function createRow(item, type) {
       </td>
       <td>${item.itemCategory}</td>
       <td>${item.location}</td>
-      <td>${new Date(item.date).toLocaleDateString()}</td>
+      <td>${new Date(item.date).toLocaleDateString('en-GB')}</td>
       <td>
         <span class="badge bg-${item.type === "FOUND" ? "success" : item.type === "CLOSED" ? "secondary" : "warning"}">
           ${item.type}

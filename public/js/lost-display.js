@@ -31,7 +31,7 @@ function displayLostItemsBatch() {
         <p>${item.description}</p>
         <p><strong>Category:</strong> ${item.itemCategory}</p>
         <p><strong>Location:</strong> ${item.location}</p>
-        <p><strong>Date:</strong> ${new Date(item.date).toLocaleDateString()}</p>
+        <p><strong>Date:</strong> ${new Date(item.date).toLocaleDateString('en-GB')}</p>
         <p><strong>Contact:</strong> ${item.contactInfo}</p>
       </div>
     `;
@@ -67,7 +67,7 @@ function attachItemDetailListeners() {
         <p><strong>Description:</strong> ${item.description}</p>
         <p><strong>Category:</strong> ${item.itemCategory}</p>
         <p><strong>Location:</strong> ${item.location}</p>
-        <p><strong>Date:</strong> ${new Date(item.date).toLocaleDateString()}</p>
+        <p><strong>Date:</strong> ${new Date(item.date).toLocaleDateString('en-GB')}</p>
         <p><strong>Contact:</strong> ${item.contactInfo}</p>
         <p><strong>Reported By:</strong> ${item.createdByName || 'Anonymous'}</p>
       `;
