@@ -56,21 +56,25 @@ async function loadMyReports() {
 
   } catch (err) {
     console.error(err);
-    document.getElementById("lostBody").innerHTML = `<tr><td colspan="6" class="text-center text-danger">Failed to load reports</td></tr>`;
-    document.getElementById("foundBody").innerHTML = `<tr><td colspan="6" class="text-center text-danger">Failed to load reports</td></tr>`;
-    document.getElementById("closedBody").innerHTML = `<tr><td colspan="6" class="text-center text-danger">Failed to load reports</td></tr>`;
+    const errorRow = `<tr><td colspan="6" class="text-center text-danger">Failed to load reports</td></tr>`;
+    lostBody.innerHTML = errorRow;
+    foundBody.innerHTML = errorRow;
+    closedBody.innerHTML = errorRow;
   }
 }
 
 function createRow(item, type) {
-  let isLost = type === true;
-  let isClosed = type === "closed";
+  const isLost = type === true;
+  const isClosed = type === "closed";
+
+  // === UPDATE IMAGE SRC TO FETCH FROM MONGODB ===
+  const imgSrc = item.image ? `${BASE_URL}/items/${item._id}/image` : null;
 
   return `
     <tr>
       <td>
-        ${item.image
-          ? `<img src="${BASE_URL}/${item.image}" width="60" />`
+        ${imgSrc
+          ? `<img src="${imgSrc}" width="60" style="object-fit:cover; border-radius:4px;" />`
           : `<i class="fa fa-image text-muted"></i>`}
       </td>
       <td>${item.itemCategory}</td>
@@ -93,6 +97,7 @@ function createRow(item, type) {
   `;
 }
 
+// --- Keep your existing functions unchanged ---
 async function markAsClosed(id) {
   if (!confirm("Mark this item as closed?")) return;
 
@@ -103,7 +108,10 @@ async function markAsClosed(id) {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${token}`
       },
-      body: JSON.stringify({ type: "CLOSED" })
+      body: JSON.stringify({ 
+        type: "CLOSED",       
+        status: "RESOLVED"    
+      })
     });
 
     if (!res.ok) throw new Error("Failed to update");
